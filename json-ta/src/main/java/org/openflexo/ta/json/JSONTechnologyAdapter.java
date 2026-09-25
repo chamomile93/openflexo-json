@@ -188,7 +188,8 @@ public class JSONTechnologyAdapter extends TechnologyAdapter<JSONTechnologyAdapt
 		JSONResourceRepository<I> returned = resourceCenter.retrieveRepository(JSONResourceRepository.class, this);
 		if (returned == null) {
 			returned = JSONResourceRepository.instanciateNewRepository(this, resourceCenter);
-			resourceCenter.registerRepository(returned, JSONResourceRepository.class, this);
+			// Another thread may have registered one meanwhile: use the registered one (CORE-D-25)
+			returned = resourceCenter.registerRepository(returned, JSONResourceRepository.class, this);
 		}
 		return returned;
 	}
@@ -198,7 +199,8 @@ public class JSONTechnologyAdapter extends TechnologyAdapter<JSONTechnologyAdapt
 		JSONSchemaResourceRepository<I> returned = resourceCenter.retrieveRepository(JSONSchemaResourceRepository.class, this);
 		if (returned == null) {
 			returned = JSONSchemaResourceRepository.instanciateNewRepository(this, resourceCenter);
-			resourceCenter.registerRepository(returned, JSONSchemaResourceRepository.class, this);
+			// Another thread may have registered one meanwhile: use the registered one (CORE-D-25)
+			returned = resourceCenter.registerRepository(returned, JSONSchemaResourceRepository.class, this);
 		}
 		return returned;
 	}
