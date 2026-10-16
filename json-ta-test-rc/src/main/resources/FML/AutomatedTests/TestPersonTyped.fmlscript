@@ -1,0 +1,36 @@
+log "========== CHARGEMENT DU VIRTUAL MODEL TestPersonTyped ==========";
+vm = load -r [
+  "http://www.openflexo.org/projects/2025/11/JsonProjectTest_1764458135187.prj/TestPersonTyped.fml"
+];
+assert vm != null;
+
+log "========== CHARGEMENT DE Person.json ==========";
+jsonResource = load -r [
+  "http://www.openflexo.org/test/json/JSON/Person.json"
+];
+assert jsonResource != null;
+
+log "========== CREATION DE LA VMI ==========";
+
+// Automated tests use a temporary resource center. A VMI created here is not
+// meant to be found after restarting OpenFlexo.
+service ResourceCenterService add_temp_rc;
+log "WARNING: VMI creee dans un ResourceCenter temporaire pour le test";
+vmi = new TestPersonTyped(jsonResource.resource) with (name="TestPersonTypedInstance");
+assert vmi != null;
+assert vmi.root != null;
+assert vmi.documentName() == "MyDocument";
+vmi.printNodes();
+assert vmi.nodes().children.size == 2;
+assert vmi.references().children.size == 1;
+
+log "========== INSTANCIATION PersonConcept ==========";
+
+john = vmi.new PersonConcept("John");
+assert john != null;
+assert john.id() == "n1";
+assert john.name() == "John";
+assert john.age() == 30;
+
+
+log "========== TestPersonTyped OK ==========";

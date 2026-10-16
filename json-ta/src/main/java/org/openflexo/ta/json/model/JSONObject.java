@@ -46,7 +46,7 @@ import org.openflexo.pamela.annotations.ModelEntity;
 import org.openflexo.ta.json.JSONTechnologyAdapter;
 
 /**
- * Common API for all objects involved in XX model
+ * Common API for all objects involved in a JSON model.
  * 
  * @author sylvain
  *
@@ -54,38 +54,38 @@ import org.openflexo.ta.json.JSONTechnologyAdapter;
 @ModelEntity(isAbstract = true)
 public interface JSONObject extends InnerResourceData<JSONDocument>, TechnologyObject<JSONTechnologyAdapter> {
 
-	public JSONModelFactory getFactory();
+    public JSONModelFactory getFactory();
 
-	/**
-	 * Return {@link JSONDocument} where this {@link JSONObject} is defined
-	 * 
-	 * @return
-	 */
-	public JSONDocument getJSONDocument();
+    /**
+     * Return {@link JSONDocument} where this {@link JSONObject} is defined
+     *
+     * @return
+     */
+    public JSONDocument getJSONDocument();
 
-	/**
-	 * Default base implementation for {@link JSONObject}
-	 * 
-	 * @author sylvain
-	 *
-	 */
-	public static abstract class XXObjectImpl extends FlexoObjectImpl implements JSONObject {
+    /**
+     * Default base implementation for {@link JSONObject}
+     *
+     * @author sylvain
+     *
+     */
+    public static abstract class JSONObjectImpl extends FlexoObjectImpl implements JSONObject {
 
-		@SuppressWarnings("unused")
-		private static final Logger logger = Logger.getLogger(XXObjectImpl.class.getPackage().getName());
+        @SuppressWarnings("unused")
+        private static final Logger logger = Logger.getLogger(JSONObjectImpl.class.getPackage().getName());
 
-		@Override
-		public JSONTechnologyAdapter getTechnologyAdapter() {
-			if (getResourceData() != null && getResourceData().getResource() != null) {
-				return getResourceData().getResource().getTechnologyAdapter();
-			}
-			return null;
-		}
+        @Override
+        public JSONTechnologyAdapter getTechnologyAdapter() {
+            if (getResourceData() != null && getResourceData().getResource() != null) {
+                return getResourceData().getResource().getTechnologyAdapter();
+            }
+            return null;
+        }
 
-		@Override
-		public JSONModelFactory getFactory() {
-			return getResourceData().getResource().getFactory();
-		}
+        @Override
+        public JSONModelFactory getFactory() {
+            return getResourceData().getResource().getFactory();
+        }
 
-	}
+    }
 }

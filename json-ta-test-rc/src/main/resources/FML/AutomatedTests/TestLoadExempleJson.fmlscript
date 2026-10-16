@@ -1,0 +1,33 @@
+// Initialization
+service ResourceCenterService status;
+resources;
+context;
+
+// Load the JSON Virtual Model
+
+vm = load -r [
+  "http://tuto/TestFMLJSONVM.fml"
+];
+
+assert vm != null;
+log "VirtualModel loaded: " + vm;
+
+// Load the JSON resource (adapt the URI to the JSON file)
+
+jsonResource = load -r [
+  "http://www.openflexo.org/test/json/JSON/Alice.json"
+];
+
+
+assert jsonResource != null;
+log "JSON Resource loaded: " + jsonResource;
+
+// Instantiate the JsonInstanciateDemo
+// Automated tests use a temporary resource center. A VMI created here is not
+// meant to be found after restarting OpenFlexo.
+service ResourceCenterService add_temp_rc;
+log "WARNING: VMI creee dans un ResourceCenter temporaire pour le test";
+vmi = new TestFMLJSONVM(jsonResource.resource) with (name="JsonInstanciateDemo");
+context;
+assert vmi != null;
+log "VirtualModelInstance created: " + vmi;

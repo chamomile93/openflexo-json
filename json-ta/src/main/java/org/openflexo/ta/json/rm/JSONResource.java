@@ -39,10 +39,11 @@
 package org.openflexo.ta.json.rm;
 
 import org.openflexo.foundation.resource.PamelaResource;
-import org.openflexo.foundation.technologyadapter.TechnologyAdapterResource;
+import org.openflexo.foundation.technologyadapter.FlexoModelResource;
 import org.openflexo.pamela.annotations.ImplementationClass;
 import org.openflexo.pamela.annotations.ModelEntity;
 import org.openflexo.ta.json.JSONTechnologyAdapter;
+import org.openflexo.ta.json.metamodel.JSONSchemaDocument;
 import org.openflexo.ta.json.model.JSONDocument;
 import org.openflexo.ta.json.model.JSONModelFactory;
 
@@ -57,7 +58,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ModelEntity
 @ImplementationClass(JSONResourceImpl.class)
 public interface JSONResource
-		extends TechnologyAdapterResource<JSONDocument, JSONTechnologyAdapter>, PamelaResource<JSONDocument, JSONModelFactory> {
+		extends FlexoModelResource<JSONDocument, JSONSchemaDocument, JSONTechnologyAdapter, JSONTechnologyAdapter>,
+		PamelaResource<JSONDocument, JSONModelFactory> {
 
 	/**
 	 * Convenient method to retrieve resource data
@@ -65,6 +67,12 @@ public interface JSONResource
 	 * @return
 	 */
 	public JSONDocument getJSONDocument();
+
+	@Override
+	public JSONDocument getModelData();
+
+	@Override
+	public JSONDocument getModel();
 
 	public ObjectMapper getObjectMapper();
 }
