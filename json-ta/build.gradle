@@ -3,8 +3,8 @@ dependencies {
   implementation flexoFoundation()
   implementation flexoOntology()
   // external dep
-  implementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.8.1"
-  implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.8.1"
+  implementation jacksonCore()
+  implementation jacksonDatabind()
 
   // testing dep
   testImplementation testUtils()
